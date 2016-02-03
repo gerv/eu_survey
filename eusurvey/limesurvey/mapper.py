@@ -45,6 +45,7 @@ def split_map_questions(survey_map_list):
         # Last row, record:
         if i == (total_rows - 1):
             survey_questions.append(question_list)
+    logger.debug("Found %i questions in survey" % len(survey_questions))
     return survey_questions
 
 

@@ -1,17 +1,11 @@
 import logging
 
 from eusurvey.fields.extractors import base
-from eusurvey.fields.common import (
-    get as g,
-    get_label,
-    to_str,
-)
+from eusurvey.fields.common import get_label
 
 logger = logging.getLogger(__name__)
 
-
 def get_input(element):
-    element = g(element.xpath('.//td/input'))
     _a = lambda x: element.attrib.get(x)
     attrs = ['id', 'name', 'value', 'data-id']
     field = dict([(k, _a(k)) for k in attrs])
@@ -26,10 +20,10 @@ def get_input(element):
 
 def get_input_list(section):
     input_list = []
-    for element in section.xpath('.//table[@class="answers-table"]/tr'):
+    for element in section.xpath('.//table[@class="answers-table"]//input'):
         input_list.append({
-            'label': get_label(element),
             'input': get_input(element),
+            'label': get_label(element, section),
         })
     return input_list
 

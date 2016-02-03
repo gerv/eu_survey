@@ -60,6 +60,7 @@ def get_form_pages(tree):
             'id': html_id,
             'data_id': data_id
         })
+    logger.debug("%i form sections found" % len(section_list))
     return section_list
 
 
@@ -67,9 +68,10 @@ def get_page_fields(tree, page):
     page_id = 'page%s' % page['id'].replace('tab', '')
     page_element = get(tree.xpath('.//div[@id="%s"]' % page_id))
     field_list = []
-    for element in page_element.xpath('.//div[@class="elem_basic"]'):
+    for element in page_element.xpath('.//div[@class="elementwrapper"]'):
         item = extract_element(element)
         field_list.append(item)
+    logger.debug("%i fields found" % len(field_list))
     return field_list
 
 
@@ -87,9 +89,11 @@ def process(url, is_update=False):
     survey_dict.update(db_dict)
     form_tree = survey_dict['form_tree']
     page_list = get_form_pages(form_tree.tree)
+    logger.debug("%i form pages found" % len(page_list))
     survey_list = []
     for page in page_list:
         fields = get_page_fields(form_tree.tree, page)
+        logger.debug("%i fields found in page" % len(fields))
         survey_list.append((page, fields))
     # TODO: Activate this with a flag:
     #  renderer.render(survey_list)

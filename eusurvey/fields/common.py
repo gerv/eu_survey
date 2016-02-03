@@ -27,10 +27,10 @@ def is_mandatory(question):
     return bool(pattern_list)
 
 
-def get_label(field_element):
-    """Determines the label for the field_element."""
-    label_field = get(field_element.xpath('.//td/label'))
-    label = get(label_field.xpath('.//span[@class="answertext"]'))
+def get_label(input_element, document):
+    """Determines the label for an input_element."""
+    input_id = input_element.attrib["id"]
+    label = get(document.xpath('.//label[@for="%s"]' % input_id))
     remove_elements = (
         '<span class="answertext">',
         '</span>',
