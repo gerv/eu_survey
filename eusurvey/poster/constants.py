@@ -10,4 +10,6 @@ SPECIAL_FIELDS = (
     'mode',
     'draftid',
     'newlang',
+    'newcss',
+    '_csrf'
 )
